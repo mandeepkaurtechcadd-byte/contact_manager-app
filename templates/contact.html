@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head>
+<body>
+
+<div class="bg-glow glow-1"></div>
+<div class="bg-glow glow-2"></div>
+
+<header class="site-header">
+    <div class="wrap">
+        <a href="contact.html" class="brand">
+            <span class="brand-icon">📇</span> Contact Manager
+        </a>
+        <p class="tagline">Every number, one place.</p>
+    </div>
+</header>
+
+<main class="wrap">
+
+    <!-- SEARCH BAR -->
+    <!-- In Flask: <form method="GET" action="/">, input name="q", read with request.args.get('q') -->
+    <section class="search-card">
+        <form class="search-form" method="GET">
+            <span class="search-icon">🔍</span>
+            <input type="text" name="keyword" placeholder="Search contacts by name...">
+            <button type="submit" class="btn-search">Search</button>
+        </form>
+    </section>
+
+    <div class="content-grid">
+
+        <!-- ADD CONTACT FORM -->
+        <!-- When you add Flask: <form method="POST" action="/add-contact">, inputs need name="name" / name="phone" / name="email" -->
+        <section class="add-contact-card">
+            <h2>Add Contact</h2>
+            <form class="contact-form" method="POST">
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="e.g. Priya Sharma">
+                </div>
+
+                <div class="field">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" placeholder="e.g. 98765 43210">
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="e.g. priya@email.com">
+                </div>
+
+                <button type="submit" class="btn-add">
+                    <span>+</span> Add Contact
+                </button>
+            </form>
+        </section>
+
+        <!-- CONTACT LIST -->
+        <!-- In Flask, the list below becomes: {% for contact in contacts %} ... {% endfor %} -->
+        <section class="contact-list-card">
+            <div class="section-title">
+                <h2>Your Contacts</h2>
+                <span class="contact-count">{{count}}</span>
+            </div>
+
+            <div class="contact-list">
+                {% for contact in contacts %}
+                <div class="contact-row">
+                    <div class="avatar avatar-1">PS</div>
+                    <div class="contact-info">
+                        <p class="contact-name">{{contact.name}}</p>
+                        <span class="contact-detail">📞 {{contact.phone}}</span>
+                        <span class="contact-detail">✉️ {{contact.email}}</span>
+                    </div>
+                    <div class="contact-actions">
+                        <a href="{{url_for('edit_contact',id=contact.id)}}"><button class="icon-btn edit-btn" title="Edit">✏️</button></a>
+                       <a href="{{url_for('delete_contact',id=contact.id)}}"><button class="icon-btn delete-btn" title="Delete">🗑️</button></a>
+                    </div>
+                </div>
+
+            {% endfor %}
+            </div>
+        </section>
+
+    </div>
+
+</main>
+
+<footer class="site-footer">
+    <p>Frontend demo — backend (Flask + database) to be added next.</p>
+</footer>
+
+</body>
+</html>
